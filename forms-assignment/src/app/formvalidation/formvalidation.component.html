@@ -1,0 +1,72 @@
+<div class="container">
+    <h1 align=center>Welcome To Form Validation Demo</h1>
+    <form #employeeForm="ngForm" (ngSubmit)="OnSubmit()" novalidate>
+        {{employeeForm.form.valid}}
+        <div class="form-group">
+            <label>Product ID</label>
+            <input #pid="ngModel" type="text" pattern="^\d[1-9]{1}[0-9]{3}$" required
+                [class.is-invalid]="pid.invalid && pid.touched" class="form-control" placeholder="Enter Your ID "
+                name="prodId" [(ngModel)]="Id" />
+            <!-- <small class="text-danger" [class.d-none]="pid.valid || pid.untouched ">Product Id is Required</small> -->
+            <div *ngIf="pid.errors && (pid.invalid || pid.touched)">
+                <small class="text-danger" *ngIf="pid.errors.required && pid.touched">Product Id is Required</small>
+                <small class="text-danger" *ngIf="pid.errors.pattern">Product Id Should not start with zero and max
+                    length is 5</small>
+
+
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label>Product Name</label>
+            <input type="text" #namec="ngModel" pattern="^[A-Z]{1}[a-z]{3,10}$" required
+                [class.is-invalid]="namec.invalid && namec.touched" class="form-control"
+                placeholder="Enter Product Name" name="prodName" [(ngModel)]="Name" />
+            <!-- <small class="text-danger" [class.d-none]="namec.valid || namec.untouched ">Product Name Should be in format @example Aman and maxlength is 11</small> -->
+            <div *ngIf="namec.errors && (namec.invalid || namec.touched)">
+                <small class="text-danger" *ngIf="namec.errors.required && namec.touched">Product Name is
+                    Required</small>
+                <small class="text-danger" *ngIf="namec.errors.pattern">Product Name Should be in format @example Aman
+                    and maxlength is 11</small>
+
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label>Product Cost</label>
+            <input #costc="ngModel" pattern="^\d[1-9]{1}[0-9]{3,8}$" required
+                [class.is-invalid]="costc.invalid && costc.touched" type="number" class="form-control"
+                placeholder="Enter Product Cost" name="prodCost" [(ngModel)]="Cost" />
+            <div *ngIf="costc.errors && (costc.invalid || costc.touched)">
+                <small class="text-danger" *ngIf="costc.errors.required && costc.touched">Product Cost is
+                    Required</small>
+                <small class="text-danger" *ngIf="costc.errors.pattern">Product Cost Should not be Zero and less than
+                    crore</small>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Product Online</label>
+            <input type="radio" class="form-check-inline" name="Online" [(ngModel)]="POnline" value="Yes" />Yes<input
+                type="radio" class="form-check-inline" name="Online" value="No" [(ngModel)]="POnline" />No
+        </div>
+        <div class="form-group">
+            <label>Product Category</label>
+            <select class="custom-select" required #cat="ngModel" [class.is-invalid]="cat.invalid && cat.touched"
+                name="prodCat" [(ngModel)]="categ">
+                <option value="" selected>Choose any type</option>
+                <option *ngFor="let option of choices">{{option}}</option>
+            </select>
+            <small class="text-danger" [class.d-none]="cat.valid || cat.untouched">Please select any option</small>
+        </div>
+        <div class="form-group">
+            <label>Available In Store:</label>
+            <input type="checkbox" value="Big Bazar" />Big Bazar<input type="checkbox" value="Dmart" />DMart<input
+                type="checkbox" value="Reliance" />Reliance<input type="checkbox" value="Mega Store" />Mega Store
+        </div>
+        <button [disabled]="employeeForm.form.invalid" class="btn btn-primary" (click)=addProduct()>Add Product</button>
+
+    </form>
+</div>
